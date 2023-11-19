@@ -11,7 +11,7 @@ def roll_dice(num_dice):
     roll_results = []
     for _ in range(num_dice):
         roll = random.randint(1, 6)
-        index = random.randint(0, len(list_words) - 1)
+        index = random.randint(0, len(list_words))
 
         roll_results.append(str(roll) + list_words[index])
     return roll_results
