@@ -1,5 +1,6 @@
 import random
 num_dice = 2
+list_words = ["num", "py", "leaden", "omni", "colors", "numpty"]
 
 def roll_dice(num_dice):
     """Return a list of integers with length `num_dice`.
@@ -10,7 +11,9 @@ def roll_dice(num_dice):
     roll_results = []
     for _ in range(num_dice):
         roll = random.randint(1, 6)
-        roll_results.append(roll)
+        index = random.randint(0, len(list_words) - 1)
+
+        roll_results.append(str(roll) + list_words[index])
     return roll_results
 
 roll_results = roll_dice(num_dice)
