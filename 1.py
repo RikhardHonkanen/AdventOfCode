@@ -12,6 +12,10 @@ numbers_as_words = {
     "nine":     "9",
 }
 
+def find_first_number(cal):
+    #we might fix this one day (don't count on it)
+    pass
+
 def find_first_number_as_string(cal):
     for key in numbers_as_words.keys():  
         if key in cal:
