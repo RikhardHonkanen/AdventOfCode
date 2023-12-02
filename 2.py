@@ -26,8 +26,9 @@ def check_if_roll_is_possible(roll):
         number = int(re.search(r'\d+', cube_color).group())
         for key in available_cubes.keys():
             if (key in cube_color):
-                possible = False if int(available_cubes[key]) < number else True
-    return possible
+                if (int(available_cubes[key]) < number):
+                    return False
+    return True
         
 def populate_possible_games(games):
     for idx, g in enumerate(games):
@@ -59,6 +60,9 @@ def add_all_possible_games(possible_games):
     for res in possible_games:
         sum += int(res)
     return sum
+
+# print(check_if_roll_is_possible('17 red, 2 green'))
+# exit()
 
 possible_games = []
 games = parse_file('2.txt')
