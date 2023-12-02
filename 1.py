@@ -39,7 +39,7 @@ def find_first_int_index(cal):
 def find_first_number_as_string_indexes(cal, reverse = False):
     word_index_map = []
     for key in numbers_as_words.keys():  
-        compare = key if not reverse else reverse_string(key)
+        compare = key if not reverse else reversed(key)
         if compare in cal:
             word_index_map.append({ numbers_as_words[key]: cal.index(compare) }) 
         else:
@@ -60,7 +60,7 @@ def get_first_coordinate(cal):
     return coordinate
 
 def get_last_coordinate(cal):
-    reversed_cal = reverse_string(cal)    
+    reversed_cal = reversed(cal)    
     first_int_index = find_first_int_index(reversed_cal)
     word_indexes = find_first_number_as_string_indexes(reversed_cal, True)
     word_indexes.append(first_int_index)
@@ -78,12 +78,6 @@ def parse_file(path):
 		parsed_input = f.read().split("\n")
 	return parsed_input
 
-def reverse_string(input):
-  return input[::-1]
-
-# test = find_first_number_as_string_indexes("twobrrone")
-# test = find_first_int_index("t9wo821brrone")
-# test = find_lowest_index_character([{'1': 6}, {'2': 0}, {'3': -1}, {'4': -1}, {'5': -1}, {'6': -1}, {'7': -1}, {'8': -1}, {'9': -1}])
 results = []
 calibration_values = parse_file('1.txt')
 parse_coordinates(calibration_values)

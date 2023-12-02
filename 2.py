@@ -51,9 +51,6 @@ def parse_file(path):
 		parsed_input = f.read().split("\n")
 	return parsed_input
 
-def reverse_string(input):
-  return input[::-1]
-
 def add_all_possible_games(possible_games):
     sum = 0
     for res in possible_games:
