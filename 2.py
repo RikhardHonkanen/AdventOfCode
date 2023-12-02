@@ -20,7 +20,6 @@ available_cubes = {
 }
 
 def check_if_roll_is_possible(roll):
-    possible = True
     roll_cubes = roll.split(',')
     for cube_color in roll_cubes:
         number = int(re.search(r'\d+', cube_color).group())
