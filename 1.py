@@ -67,16 +67,16 @@ def get_last_coordinate(cal):
     coordinate = find_lowest_index_character(word_indexes)
     return coordinate
 
-def parse_file(path):
-	with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), path), "r") as f:
-		parsed_input = f.read().split("\n")
-	return parsed_input
-
 def add_all_coordinates(results):
     sum = 0
     for res in results:
         sum += int(res)
     return sum
+
+def parse_file(path):
+	with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), path), "r") as f:
+		parsed_input = f.read().split("\n")
+	return parsed_input
 
 def reverse_string(input):
   return input[::-1]
