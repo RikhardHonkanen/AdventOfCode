@@ -1,3 +1,9 @@
+#################
+### SPOILERS  ###
+### FOR DAY 1 ###
+### OF AOC    ###
+#################
+
 import os, sys
 
 numbers_as_words = {
