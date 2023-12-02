@@ -86,6 +86,6 @@ def reverse_string(input):
 # test = find_lowest_index_character([{'1': 6}, {'2': 0}, {'3': -1}, {'4': -1}, {'5': -1}, {'6': -1}, {'7': -1}, {'8': -1}, {'9': -1}])
 results = []
 calibration_values = parse_file('1.txt')
-single_coordinate = parse_coordinates(calibration_values)
+parse_coordinates(calibration_values)
 answer = add_all_coordinates(results)
 print(answer)
