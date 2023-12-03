@@ -18,8 +18,6 @@ numbers_as_words = {
     "nine":     "9"
 }
 
-word_index_map = []
-
 def find_lowest_index_character(indexes):
     lowest = -1
     answer = 0
