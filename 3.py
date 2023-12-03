@@ -11,6 +11,7 @@ import re
 symbol_indexes_map = {}
 # hardcoded input rows, because lazy
 num_rows = 140
+# num_rows = 10
 
 def store_symbol_indexes(schematic):
     row_length = len(schematic[0])
@@ -29,17 +30,30 @@ def compare_symbol_number_locations(idx, numbers_with_locations):
     
 def compare_to_adjacent_rows(idx, number_location):
     n = list(number_location.keys())[0]
+    print(f'In: {n}')
     bounds = list(number_location.values())[0]
-    # note to self: risk of off by one errors here
-    min_bound = bounds[0] - 2 if bounds[0] - 2 >= 0 else bounds[0] - 1
-    max_bound = bounds[1] + 2 if bounds[1] + 2 <= row_length + 1 else bounds[1] + 1
-    row_above = idx - 1 if idx - 1 >= 0 else idx
-    row_below = idx + 1 if idx + 1 <= num_rows else idx
     
-    for vindex in range(row_above, row_below):
+    # note to self: risk of off by one errors here
+    min_bound = bounds[0] - 1 if bounds[0] - 1 >= 0 else bounds[0]
+    max_bound = bounds[1] if bounds[1] <= row_length + 1 else bounds[1] - 1
+    top_row_to_check = idx - 1 if idx - 1 >= 0 else idx
+    bottom_row_to_check = idx + 2 if idx + 2 <= num_rows else idx + 1
+    
+    print(f'Rows: {num_rows}')
+    print(f'Top row: {top_row_to_check}')
+    print(f'Bottom row: {bottom_row_to_check}')
+    print(f'Left index: {min_bound}')
+    print(f'Right index: {max_bound}')
+    
+    for vindex in range(top_row_to_check, bottom_row_to_check):
+        print(f'Checking row: {vindex}')
+        print(f'Symbolindexes on row: {symbol_indexes_map[vindex]}')
         for hindex in range(min_bound, max_bound):
+            print(f'Symbolindexes on row: {symbol_indexes_map[vindex]}')
             if(int(hindex) in symbol_indexes_map[vindex]):
+                print(f'Out: {n}')
                 results.append(n)
+                break
         
 def extract_number_locations(line):
     results = [{m.group(): (m.start(0), m.end(0) + 1)} for m in re.finditer(r'\d+', line)]
@@ -67,4 +81,6 @@ schematic = parse_file('3.txt')
 row_length = store_symbol_indexes(schematic)
 populate_results(schematic)
 answer = add_all_results(results)
+print(f'Results: {results}')
+# test expect: 4361
 print(answer)
