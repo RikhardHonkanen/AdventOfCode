@@ -66,7 +66,10 @@ def part_one(input):
     return answer
 
 def part_two(input):
-    running_totals.clear()
+    # running_totals.clear()
+    global running_totals
+    running_totals = {}
+    
     input_length = len(input)
     for idx, row in enumerate(input):
         numbers = row.split(':')[1]
