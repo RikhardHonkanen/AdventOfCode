@@ -1,8 +1,8 @@
-#################################
-###### SPOILERS FOR DAY 04 ######
-#################################
-## HE CONFORMS TO THE TEMPLATE ##
-#################################
+###################################
+####### SPOILERS FOR DAY 04 #######
+###################################
+### HE CONFORMS TO THE TEMPLATE ###
+###################################
 
 import os, sys
 import re
@@ -40,22 +40,30 @@ def calculate_points_for_card(numbers):
 def add_to_running_totals(idx, numbers): 
     game_number = idx + 1   
     winners = get_win_amount(numbers)
-    power = 1
+    power = 1   
+        
     if (game_number in running_totals):
         power = running_totals[game_number]
     else:
         running_totals[game_number] = 1 # If current game doesn't have an entry yet, we only have one ticket
-    
+        
+    ### Debugging
+    if (game_number >= 195 and game_number <= 201):
+        print(winners)    
+    ### End
+        
     for n in range(1, winners + 1):
         if (game_number + n in running_totals):
             running_totals[game_number + n] += power
         else:
             running_totals[game_number + n] = power + 1 # Need to remember we start with a ticket
             
-def add_all_running_totals(input_length):
+def sum_all_running_totals(input_length):
     answer = 0
-    for num in range(0, input_length):
-        answer += list(running_totals.values())[num]
+    # for num in range(0, input_length):
+    #     answer += list(running_totals.values())[num]
+    for val in running_totals.values():
+        answer += val
     return answer        
 
 def part_one(input):
@@ -74,7 +82,7 @@ def part_two(input):
     for idx, row in enumerate(input):
         numbers = row.split(':')[1]
         add_to_running_totals(idx, numbers)        
-    return add_all_running_totals(input_length)
+    return sum_all_running_totals(input_length)
 
 if __name__ == "__main__":
     P1TEST, P2TEST = 13, 30
