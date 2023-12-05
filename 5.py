@@ -1,7 +1,7 @@
 ###################################
 ####### SPOILERS FOR DAY 05 #######
 ###################################
-### ########################### ###
+## TO BE OR NOT TO BE CONTINUED ###
 ###################################
 
 import os, sys
@@ -48,13 +48,19 @@ def populate_maps(clean_data):
         else:
             maps[current_key] = [number_list]
             
-def walk_the_maps(seed):
+def walk_the_maps(seed, lookup_table):
     print_debug(f"Seed: {seed}")
     current = seed
     path = []
     for rows in maps:
         print_debug(f"Current data: {rows}: {maps[rows]}")
-        for r in maps[rows]:
+        for idx, r in enumerate(maps[rows]):
+            if (idx == 2):
+                if (current in lookup_table):
+                    print(lookup_table)
+                    print_debug(f"Path explored, destination: {lookup_table[current]}")
+                    return -1, []
+            
             source_min = int(r[1]) 
             source_max = int(r[1]) + int(r[2]) - 1
             print_debug(f"Source min, source max: {source_min} - {source_max}")
@@ -84,15 +90,19 @@ def find_nearest_location(seed_ranges = False):
     if seed_ranges:
         ranges = get_ranges(seeds)        
         for r in ranges:
+            lookup_table = {}
             for seed in range(r[0], r[1]):
-                destination, path = walk_the_maps(seed)
-                print(path)
-                exit()
+                destination, path = walk_the_maps(seed, lookup_table)
+                if (destination == -1):
+                    continue
+                if (path):
+                    lookup_table[path[1]] = destination
+                    # print(lookup_table)
                 if (destination < lowest or lowest == -1):
                     lowest = destination             
     else:
         for seed in seeds:
-            destination = walk_the_maps(seed)
+            destination = walk_the_maps(seed, {})
             if (destination < lowest or lowest == -1):
                 lowest = destination 
         
@@ -126,9 +136,11 @@ if __name__ == "__main__":
     P1TEST, P2TEST = 35, 46
     test_input, input = parse_file("5test.txt"), parse_file("5.txt")
     # print(f"Part 1 Test: {part_one(test_input, False)} (expected {P1TEST})")
-    # print(f"Part 2 Test: {part_two(test_input, False)} (expected {P2TEST})")
+    print(f"Part 2 Test: {part_two(test_input, True)} (expected {P2TEST})")
     # print()
     # print(f"Part 1: {part_one(input)}")
-    print(f"Part 2: {part_two(input)}")
+    # print(f"Part 2: {part_two(input)}")
     
-    ## 
+    ### Part one wasn't too bad, mostly tedious with all the parsing
+    ### I figured out a solution for the test case for part 2, but it didn't scale to the input data (computer dying)
+    ### Tried to implement some kind of lookup table, but it probably made things worse... and broke part 1 in the process
