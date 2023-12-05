@@ -60,13 +60,16 @@ def walk_the_maps(seed):
             print_debug(f"Source min, source max: {source_min} - {source_max}")
             if (int(current) >= source_min and source_max >= int(current)):
                 current = int(r[0]) + (int(current)) - source_min
+                path.append(current)
                 print_debug(f"Match! New current: {current}")
                 break
             print_debug(f"No match. Current is still: {current}")
-        # If no match, do nothing and go to next map
+        # If no match, record path and go to next map
+        path.append(current)
+        
     print_debug(f"Destination: {current}")
     print_debug(f"------------------------------------")
-    return current
+    return current, path
 
 def get_ranges(seeds):
     ranges = []
@@ -79,12 +82,12 @@ def get_ranges(seeds):
 def find_nearest_location(seed_ranges = False):
     lowest = -1
     if seed_ranges:
-        ranges = get_ranges(seeds)
-        print(ranges)
-        exit()
+        ranges = get_ranges(seeds)        
         for r in ranges:
             for seed in range(r[0], r[1]):
-                destination = walk_the_maps(seed)
+                destination, path = walk_the_maps(seed)
+                print(path)
+                exit()
                 if (destination < lowest or lowest == -1):
                     lowest = destination             
     else:
