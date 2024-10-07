@@ -18,11 +18,9 @@ def print_debug(string):
     if (debug):
         print(string)
         
-def count_trees(input):
+def count_trees(input, dy, dx):
     x = 0
-    dx = 3
     y_start = 0
-    dy = 1
     count = 0
     
     for y in range (y_start, len(input), dy):
@@ -32,8 +30,6 @@ def count_trees(input):
         if (x >= len(row)):
             x = x - len(row)
             
-        print(x, len(row))
-        
         if (row[x] == "#"):
             count += 1
         x += dx
@@ -45,7 +41,9 @@ def part_one(input, _debug = False):
         global debug
         debug = True
         
-    answer = count_trees(input)
+    dy = 1
+    dx = 3        
+    answer = count_trees(input, dy, dx)
     return answer
 
 def part_two(input, _debug = False):
@@ -53,14 +51,24 @@ def part_two(input, _debug = False):
         global debug
         debug = True
         
-    answer = "Part 2"
+    answer = 0
+    slopes = [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]
+    for s in slopes:
+        dx = s[0]
+        dy = s[1]
+        trees = count_trees(input, dy, dx)
+        if (answer == 0):
+            answer = trees
+        else:
+            answer = answer * trees
+            
     return answer
 
 if __name__ == "__main__":
-    P1TEST, P2TEST = 7, 1
+    P1TEST, P2TEST = 7, 336
     test_input, input = parse_file("3test.txt"), parse_file("3.txt")
     print(f"Part 1 Test: {part_one(test_input, False)} (expected {P1TEST})")
-    # print(f"Part 2 Test: {part_two(test_input, False)} (expected {P2TEST})")
+    print(f"Part 2 Test: {part_two(test_input, False)} (expected {P2TEST})")
     print()
     print(f"Part 1: {part_one(input, False)}")
-    # print(f"Part 2: {part_two(input)}")
+    print(f"Part 2: {part_two(input)}")
