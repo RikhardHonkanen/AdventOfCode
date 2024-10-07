@@ -38,6 +38,11 @@ def find_three_numbers(number_list, magic_number):
             if numbers != -1:
                 break
             m = number_list[midx]
+            
+            # Minor optimization, we don't need to keep searching if we overshoot
+            if (int(n) + int(m) > magic_number):
+                break
+            
             for pidx in range (idx + 2, len(number_list) - 1):
                 p = number_list[pidx]
                 if (int(n) + int(m) + int(p) == magic_number):
