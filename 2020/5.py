@@ -120,7 +120,7 @@ if __name__ == "__main__":
     P1TEST, P2TEST = 820, 0
     test_input, input = parse_file("5test.txt"), parse_file("5.txt")
     print(f"Part 1 test: {part_one(test_input, False)} (expected {P1TEST})")
-    print(f"Part 2 test: {part_two(test_input, False)} (expected {P2TEST})")
+    # print(f"Part 2 test: {part_two(test_input, False)} (expected {P2TEST})")
     print()
     print(f"Part 1: {part_one(input, False)}")
     print(f"Part 2: {part_two(input)}")
