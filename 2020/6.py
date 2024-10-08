@@ -27,12 +27,9 @@ def collate_single_group(group):
     return len(questions_answered_yes)
 
 def collate_single_group_strict(group):
-    questions_answered_yes = {""}
-    questions_answered_yes.remove("")
-    
+    questions_answered_yes = set()
     for idx, p in enumerate(group):
-        questions_still_in_running = {""}
-        questions_still_in_running.remove("")
+        questions_still_in_running = set()
         if idx == 0:
             for a in p:
                 questions_answered_yes.add(a)
