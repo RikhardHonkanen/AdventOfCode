@@ -7,7 +7,7 @@
 
 import os, sys, re
 
-debug = False
+debug = True
 
 def parse_file(path):    
 	with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), path), "r") as f:
@@ -48,46 +48,75 @@ def extract_rules(input):
                 
     return rules, colors
 
-def part_one(input, _debug = False):
-    if (_debug):
+def part_one(input, _debug=False):
+    if _debug:
         global debug
         debug = True
         
     rules, colors = extract_rules(input)
+    
     target = "shiny gold"
-    def check_path(colors, target, total, original_size):
-        print_debug("CHECKING (Total is " + str(total) + "):")
-        print_debug(colors)
-        for color in colors:
-            print_debug(color)
-            if color == target: continue
-            if target in rules[color]:
-                total = total + 1
-                print_debug(color + " is a match! (Total is " + str(total) + "):")
-                if len(colors) != original_size: break
-            else:
-                if not rules[color]: 
-                    continue
-                total = check_path(list(rules[color].keys()), target, total, original_size)
-        return total 
-          
-    answer = check_path(colors, target, 0, len(colors))
-    print(len(colors))
-    return answer
+    
+    # Set to track bags that can contain the target
+    valid_bags = set()
 
-def part_two(input, _debug = False):
-    if (_debug):
+    def explore_paths(colors, target):
+        found_any = False
+        
+        for color in colors:
+            # Skip if this color is the target itself
+            if color == target:
+                continue
+            
+            # If the current color directly contains the target or we already know it does, add it
+            if target in rules[color] or color in valid_bags:
+                valid_bags.add(color)
+                found_any = True
+            
+            # Otherwise, explore recursively
+            elif rules[color]:
+                if explore_paths(list(rules[color].keys()), target):
+                    valid_bags.add(color)
+                    found_any = True
+
+        return found_any
+        
+    # Explore each top-level color and count the number of valid bags
+    for color in colors:
+        explore_paths([color], target)
+    
+    return len(valid_bags)
+
+def part_two(input, _debug=False):
+    if _debug:
         global debug
         debug = True
         
-    answer = 'Part two'            
-    return answer
+    rules, colors = extract_rules(input)
+    outer_container = "shiny gold"
+    
+    def explore_paths(color, multiplier=1):
+        total_bags = 0
+        if rules[color]:
+            for inner_color, quantity in rules[color].items():
+                # Calculate the total number of bags for this color
+                total_bags += quantity * multiplier
+                # Recurse into the inner bags, multiplying by how many bags are needed
+                total_bags += explore_paths(inner_color, multiplier * quantity)
+        return total_bags
+
+    # Start exploration from the outermost "shiny gold" container
+    return explore_paths(outer_container)
+
 
 if __name__ == "__main__":
-    P1TEST, P2TEST = 4, 0
-    test_input, input = parse_file("7test.txt"), parse_file("7.txt")
-    print(f"Part 1 Test: {part_one(test_input, False)} (expected {P1TEST})")
-    # print(f"Part 2 Test: {part_two(test_input, False)} (expected {P2TEST})")
+    P1TEST, P2TEST = 4, 126
+    test_input, test_2_input, input = parse_file("7test.txt"), parse_file("7test2.txt"), parse_file("7.txt")
+    # print(f"Part 1 Test: {part_one(test_input, False)} (expected {P1TEST})")
+    print(f"Part 2 Test: {part_two(test_2_input, False)} (expected {P2TEST})")
     # print()
-    print(f"Part 1: {part_one(input)}")
-    # print(f"Part 2: {part_two(input)}")
+    # print(f"Part 1: {part_one(input)}")
+    print(f"Part 2: {part_two(input)}")
+    
+    
+    ### COLLAB CREDITS: ChatGPT4
