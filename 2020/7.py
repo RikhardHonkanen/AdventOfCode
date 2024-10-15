@@ -112,11 +112,10 @@ def part_two(input, _debug=False):
 if __name__ == "__main__":
     P1TEST, P2TEST = 4, 126
     test_input, test_2_input, input = parse_file("7test.txt"), parse_file("7test2.txt"), parse_file("7.txt")
-    # print(f"Part 1 Test: {part_one(test_input, False)} (expected {P1TEST})")
+    print(f"Part 1 Test: {part_one(test_input, False)} (expected {P1TEST})")
     print(f"Part 2 Test: {part_two(test_2_input, False)} (expected {P2TEST})")
-    # print()
-    # print(f"Part 1: {part_one(input)}")
+    print()
+    print(f"Part 1: {part_one(input)}")
     print(f"Part 2: {part_two(input)}")
-    
     
     ### COLLAB CREDITS: ChatGPT4
