@@ -41,21 +41,30 @@ def part_two(input, preamble_length, _debug = False):
         debug = True
     
     invalid_number, invalid_idx = part_one(input, preamble_length)
+    invalid_number = int(invalid_number)
     
-    working_sum = input[0]    
-    for i in range(0, invalid_idx):
-        if working_sum + input[i + 1] == invalid_number:
-            print(input[i])
-            print(input[i + 1])
-        
-    answer = 'Part two'            
-    return answer
+    working_sum = int(input[0])
+    encryption_weakness_range = []
+    for i in range(0, invalid_idx - 1):
+        if working_sum > invalid_number:
+            working_sum = int(input[i + 1])
+            continue
+        for j in range(i + 1, invalid_idx):
+            working_sum += int(input[j])
+            if working_sum == invalid_number:
+                encryption_weakness_range = input[i: j + 1]
+                break
+            elif working_sum > invalid_number:
+                continue
+                
+    encryption_weakness_range.sort()    
+    return int(encryption_weakness_range[0]) + int(encryption_weakness_range[-1])
 
 if __name__ == "__main__":
-    P1TEST, P2TEST = 127, 0
+    P1TEST, P2TEST = 127, 62
     test_input, input = parse_file("9test.txt"), parse_file("9.txt")
-    # print(f"Part 1 Test: {part_one(test_input, 5, False)} (expected {P1TEST})")
+    print(f"Part 1 Test: {part_one(test_input, 5, False)[0]} (expected {P1TEST})")
     print(f"Part 2 Test: {part_two(test_input, 5, False)} (expected {P2TEST})")
-    # print()
-    # print(f"Part 1: {part_one(input, 25)}")
-    # print(f"Part 2: {part_two(input)}")
+    print()
+    print(f"Part 1: {part_one(input, 25)[0]}")
+    print(f"Part 2: {part_two(input, 25)}")
