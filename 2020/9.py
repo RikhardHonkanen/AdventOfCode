@@ -45,7 +45,10 @@ def part_two(input, preamble_length, _debug = False):
     
     working_sum = int(input[0])
     encryption_weakness_range = []
+    
     for i in range(0, invalid_idx - 1):
+        if encryption_weakness_range:
+            break
         if working_sum > invalid_number:
             working_sum = int(input[i + 1])
             continue
@@ -55,7 +58,7 @@ def part_two(input, preamble_length, _debug = False):
                 encryption_weakness_range = input[i: j + 1]
                 break
             elif working_sum > invalid_number:
-                continue
+                break
                 
     encryption_weakness_range.sort()    
     return int(encryption_weakness_range[0]) + int(encryption_weakness_range[-1])
