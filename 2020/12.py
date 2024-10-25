@@ -62,14 +62,55 @@ def part_two(input, _debug = False):
         global debug
         debug = True
         
-    answer = 'Part two'            
-    return answer
+    def move_ship(position, waypoint, value):
+        print(f"Position: {position}, Waypoint: {waypoint}")
+        movement = ((waypoint[0] - position[0]) * value, (waypoint[1] - position[1]) * value)
+        position = (position[0] + movement[0], position[1] + movement[1])
+        waypoint = (waypoint[0] + movement[0], waypoint[1] + movement[1])
+        
+        return position, waypoint
+    
+    def rotate_waypoint(waypoint, instruction, value):
+        relative_pos = ((waypoint[0] - position[0]), (waypoint[1] - position[1]))
+        turns = int(value) / 90 if instruction == 'R' else int(value) / 90 * -1
+        # TODO: Finish implementation
+        print(relative_pos)
+        print(turns, turns % 4)
+        
+        return waypoint
+    
+    def move_waypoint(waypoint, instruction, value):
+        if instruction == 'E':
+            waypoint = (waypoint[0] + value, waypoint[1])
+        if instruction == 'S':
+            waypoint = (waypoint[0], waypoint[1] - value)
+        if instruction == 'W':
+            waypoint = (waypoint[0] - value, waypoint[1])
+        if instruction == 'N':
+            waypoint = (waypoint[0], waypoint[1] + value)
+            
+        return waypoint
+    
+    position = (0, 0)
+    waypoint = (10, 1)
+    
+    for i in input:
+        instruction, value = i[0], i[1:]
+        value = int(value)
+        if instruction == 'F':
+            position, waypoint = move_ship(position, waypoint, value)
+        elif instruction == 'R' or instruction == 'L':        
+            waypoint = rotate_waypoint(waypoint, instruction, value)
+        else:
+            waypoint = move_waypoint(waypoint, instruction, value)
+        
+    return sum(abs(x) for x in position)
 
 if __name__ == "__main__":
     P1TEST, P2TEST = 25, 286
     test_input, input = parse_file("12test.txt"), parse_file("12.txt")
-    print(f"Part 1 Test: {part_one(test_input, False)} (expected {P1TEST})")
-    # print(f"Part 2 Test: {part_two(test_input, False)} (expected {P2TEST})")
+    # print(f"Part 1 Test: {part_one(test_input, False)} (expected {P1TEST})")
+    print(f"Part 2 Test: {part_two(test_input, False)} (expected {P2TEST})")
     print()
-    print(f"Part 1: {part_one(input)}")
+    # print(f"Part 1: {part_one(input)}")
     # print(f"Part 2: {part_two(input)}")
