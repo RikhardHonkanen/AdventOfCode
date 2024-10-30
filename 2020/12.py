@@ -25,6 +25,42 @@ def get_direction(facing, instruction, value):
     new_index = (current_index + int(turns)) % len(directions)
     return directions[new_index]
 
+def move_ship(position, waypoint, value):
+    print(f"Position: {position}, Waypoint: {waypoint}")
+    movement = ((waypoint[0] - position[0]) * value, (waypoint[1] - position[1]) * value)
+    position = (position[0] + movement[0], position[1] + movement[1])
+    waypoint = (waypoint[0] + movement[0], waypoint[1] + movement[1])
+    
+    return position, waypoint
+
+def rotate_waypoint(position, waypoint, instruction, value):
+    relative_pos = ((waypoint[0] - position[0]), (waypoint[1] - position[1]))
+    turns = int(value) / 90 if instruction == 'R' else int(value) / 90 * -1
+    turns = int(turns % 4)
+    
+    if turns == 0:
+        return waypoint        
+    if turns == 1 or turns == -3:
+        relative_pos = (relative_pos[1], relative_pos[0] * -1)
+    elif turns == 2 or turns == -2:
+        relative_pos = (relative_pos[0] * -1, relative_pos[1] * -1)
+    elif turns == 3 or turns == -1:
+        relative_pos = (relative_pos[1] * -1, relative_pos[0])
+        
+    return (position[0] + relative_pos[0], position[1] + relative_pos[1])
+
+def move_waypoint(waypoint, instruction, value):
+    if instruction == 'E':
+        waypoint = (waypoint[0] + value, waypoint[1])
+    if instruction == 'S':
+        waypoint = (waypoint[0], waypoint[1] - value)
+    if instruction == 'W':
+        waypoint = (waypoint[0] - value, waypoint[1])
+    if instruction == 'N':
+        waypoint = (waypoint[0], waypoint[1] + value)
+        
+    return waypoint
+
 def part_one(input, _debug = False):
     if (_debug):
         global debug
@@ -61,35 +97,6 @@ def part_two(input, _debug = False):
     if (_debug):
         global debug
         debug = True
-        
-    def move_ship(position, waypoint, value):
-        print(f"Position: {position}, Waypoint: {waypoint}")
-        movement = ((waypoint[0] - position[0]) * value, (waypoint[1] - position[1]) * value)
-        position = (position[0] + movement[0], position[1] + movement[1])
-        waypoint = (waypoint[0] + movement[0], waypoint[1] + movement[1])
-        
-        return position, waypoint
-    
-    def rotate_waypoint(waypoint, instruction, value):
-        relative_pos = ((waypoint[0] - position[0]), (waypoint[1] - position[1]))
-        turns = int(value) / 90 if instruction == 'R' else int(value) / 90 * -1
-        # TODO: Finish implementation
-        print(relative_pos)
-        print(turns, turns % 4)
-        
-        return waypoint
-    
-    def move_waypoint(waypoint, instruction, value):
-        if instruction == 'E':
-            waypoint = (waypoint[0] + value, waypoint[1])
-        if instruction == 'S':
-            waypoint = (waypoint[0], waypoint[1] - value)
-        if instruction == 'W':
-            waypoint = (waypoint[0] - value, waypoint[1])
-        if instruction == 'N':
-            waypoint = (waypoint[0], waypoint[1] + value)
-            
-        return waypoint
     
     position = (0, 0)
     waypoint = (10, 1)
@@ -100,7 +107,7 @@ def part_two(input, _debug = False):
         if instruction == 'F':
             position, waypoint = move_ship(position, waypoint, value)
         elif instruction == 'R' or instruction == 'L':        
-            waypoint = rotate_waypoint(waypoint, instruction, value)
+            waypoint = rotate_waypoint(position, waypoint, instruction, value)
         else:
             waypoint = move_waypoint(waypoint, instruction, value)
         
@@ -109,8 +116,8 @@ def part_two(input, _debug = False):
 if __name__ == "__main__":
     P1TEST, P2TEST = 25, 286
     test_input, input = parse_file("12test.txt"), parse_file("12.txt")
-    # print(f"Part 1 Test: {part_one(test_input, False)} (expected {P1TEST})")
+    print(f"Part 1 Test: {part_one(test_input, False)} (expected {P1TEST})")
     print(f"Part 2 Test: {part_two(test_input, False)} (expected {P2TEST})")
     print()
-    # print(f"Part 1: {part_one(input)}")
-    # print(f"Part 2: {part_two(input)}")
+    print(f"Part 1: {part_one(input)}")
+    print(f"Part 2: {part_two(input)}")
