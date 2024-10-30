@@ -1,7 +1,7 @@
 ###################################
 ####### SPOILERS FOR DAY 12 #######
 ###################################
-### MESSAGE OF THE DAY IS: COW. ###
+######### I'M ON A BOAT!! #########
 ###################################
 
 import os, sys
@@ -36,10 +36,11 @@ def move_ship(position, waypoint, value):
 def rotate_waypoint(position, waypoint, instruction, value):
     relative_pos = ((waypoint[0] - position[0]), (waypoint[1] - position[1]))
     turns = int(value) / 90 if instruction == 'R' else int(value) / 90 * -1
+    # There are 4 unique positions to rotate to
     turns = int(turns % 4)
     
     if turns == 0:
-        return waypoint        
+        return waypoint # Every 4 turns we're back where we started     
     if turns == 1 or turns == -3:
         relative_pos = (relative_pos[1], relative_pos[0] * -1)
     elif turns == 2 or turns == -2:
