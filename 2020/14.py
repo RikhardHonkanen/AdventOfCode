@@ -34,8 +34,21 @@ def apply_mask(binary, mask):
             result += c
     return result
 
-def get_all_values(binary, mask):
-    pass
+def get_all_addresses(bin_addr, mask):
+    print(bin_addr, mask)
+    exit()
+    result = ""
+    for idx, c in enumerate(bin_addr):
+        if mask[idx] != '0':
+            result += mask[idx]
+        else:
+            result += c
+    
+    return result
+
+def get_padded_binary(num, length):
+        _binary = bin(num).replace("0b", "")
+        return ''.zfill(length - len(_binary)) + _binary
 
 def part_one(input, _debug = False):
     if (_debug):
@@ -50,9 +63,7 @@ def part_one(input, _debug = False):
             continue
         
         address, value = extract_values(line)
-        _binary = bin(value).replace("0b", "")
-        binary = ''.zfill(len(mask) - len(_binary)) + _binary
-        
+        binary = get_padded_binary(value, len(mask))
         to_mem = apply_mask(binary, mask)
         mem[address] = to_mem
             
@@ -64,17 +75,17 @@ def part_two(input, _debug = False):
         debug = True
         
     mask = ""
-    mem = {}                #{address: [values]}
+    mem = {}                #{address: value}
     for line in input:
         if "mask" in line:
             mask = line.split('=')[1].strip()
             continue
         
         address, value = extract_values(line)
-        _binary = bin(value).replace("0b", "")
-        binary = ''.zfill(len(mask) - len(_binary)) + _binary
+        bin_addr = get_padded_binary(address, len(mask))
+        to_mem = get_padded_binary(value, len(mask))
         
-        to_mem = get_all_values(binary, mask) # <- fix this
+        addresses = get_all_addresses(bin_addr, mask) # <- fix this
         mem[address] = to_mem
             
     return sum(int(x, 2) for x in mem.values()) # <- fix this
@@ -82,9 +93,9 @@ def part_two(input, _debug = False):
 
 if __name__ == "__main__":
     P1TEST, P2TEST = 165, 0
-    test_input, input = parse_file("14test.txt"), parse_file("14.txt")
-    print(f"Part 1 Test: {part_one(test_input, False)} (expected {P1TEST})")
-    # print(f"Part 2 Test: {part_two(test_input, False)} (expected {P2TEST})")
+    test_input, test_2_input, input = parse_file("14test.txt"), parse_file("14test2.txt"), parse_file("14.txt")
+    # print(f"Part 1 Test: {part_one(test_input, False)} (expected {P1TEST})")
+    print(f"Part 2 Test: {part_two(test_2_input, False)} (expected {P2TEST})")
     print()
-    print(f"Part 1: {part_one(input)}")
+    # print(f"Part 1: {part_one(input)}")
     # print(f"Part 2: {part_two(input)}")
