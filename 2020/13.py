@@ -41,19 +41,42 @@ def part_one(input, _debug = False):
         
     return best_dep * (time - t_zero)
 
-def part_two(input, _debug = False):
-    if (_debug):
+def part_two(input, _debug=False):
+    if _debug:
         global debug
         debug = True
+
+    # Split and parse bus IDs
+    departures = input[1].split(',')
+    bus_ids = [(int(bus), offset) for offset, bus in enumerate(departures) if bus != 'x']
+    print(bus_ids)
+
+    # Initial timestamp and step (starting with the first bus ID)
+    timestamp = 0
+    step = bus_ids[0][0]
+
+    # Iterate through each bus ID and its offset
+    for bus_id, offset in bus_ids[1:]:
+        # Increment timestamp by the current step until we satisfy the condition for the current bus ID
+        while (timestamp + offset) % bus_id != 0:
+            timestamp += step
+            
+        ### DEBUG
+        print(f"Timestamp: {timestamp}, bus ID: {bus_id}, Step: {step}")
+        ### END DEBUG
         
-    answer = 'Part two'            
-    return answer
+        # Multiply the step by the current bus ID to keep all previous buses aligned
+        step *= bus_id  # LCM-like behavior
+
+    return timestamp
 
 if __name__ == "__main__":
-    P1TEST, P2TEST = 295, 0
+    P1TEST, P2TEST = 295, 1068781
     test_input, input = parse_file("13test.txt"), parse_file("13.txt")
-    print(f"Part 1 Test: {part_one(test_input, False)} (expected {P1TEST})")
-    # print(f"Part 2 Test: {part_two(test_input, False)} (expected {P2TEST})")
+    # print(f"Part 1 Test: {part_one(test_input, False)} (expected {P1TEST})")
+    print(f"Part 2 Test: {part_two(test_input, False)} (expected {P2TEST})")
     print()
-    print(f"Part 1: {part_one(input)}")
-    # print(f"Part 2: {part_two(input)}")
+    # print(f"Part 1: {part_one(input)}")
+    print(f"Part 2: {part_two(input)}")
+    
+# Part 2 by ChatGPT
