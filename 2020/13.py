@@ -65,6 +65,10 @@ def part_two(input, _debug=False):
         print(f"Timestamp: {timestamp}, bus ID: {bus_id}, Step: {step}")
         ### END DEBUG
         
+        '''
+        Each time we alter the "step" variable we will currently be aligned at a timestamp that works for all ID's we have checked so far, 
+        so we can add in the factor of the current ID without having to worry about "missing" any points of interest.
+        '''
         # Multiply the step by the current bus ID to keep all previous buses aligned
         step *= bus_id  # LCM-like behavior
 
