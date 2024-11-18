@@ -5,7 +5,7 @@
 ###### TO ANOTHER DIMENSION. ######
 ###################################
 
-import os, sys
+import os, sys, copy
 
 debug = False
 
@@ -24,8 +24,8 @@ def expand_layers(layer_maps, min_z, max_z, inactive='.'):
     y_size = len(layer_maps[0])     # Number of rows
     
     # Add new layers (entirely filled with inactive cubes)
-    layer_maps[min_z - 1] = [inactive * (x_size + 2)] * (y_size + 2)  # New layer at z=min_z-1
-    layer_maps[max_z + 1] = [inactive * (x_size + 2)] * (y_size + 2)  # New layer at z=max_z+1
+    layer_maps[min_z - 1] = [inactive * (x_size + 2) for _ in range(y_size + 2)]
+    layer_maps[max_z + 1] = [inactive * (x_size + 2) for _ in range(y_size + 2)]
     
     # Pad each existing layer
     for z, layer in layer_maps.items():
@@ -58,13 +58,13 @@ def count_neighbours(layer_maps, _z, ridx, cidx):
                 # Make sure we're not counting the cube we're looking at itself
                 if not (z == _z and r == ridx and c == cidx):
                     if layer_maps[z][r][c] == '#':
-                        if (_z == -1 and ridx == 1 and cidx == 5):
-                            print(f"found active neighbour at") 
-                            print(f"Level: {z}, Row: {r}, Cube: {c}") 
                         neighbours += 1        
+                        # if (_z == -1 and ridx == 1 and cidx == 5):
+                        #     print(f"found active neighbour at") 
+                        #     print(f"Level: {z}, Row: {r}, Cube: {c}") 
                         
-    if (_z == -1 and ridx == 1 and cidx == 5):
-        print(neighbours) 
+    # if (_z == -1 and ridx == 1 and cidx == 5):
+    #     print(neighbours) 
     
     return neighbours
 
@@ -73,7 +73,7 @@ def part_one(input, _debug = False):
         global debug
         debug = True
         
-    boot_cycles = 1
+    boot_cycles = 6
     layer_maps = {0: input}
     after_cycle_maps = {}
     
@@ -104,13 +104,12 @@ def part_one(input, _debug = False):
             after_cycle_maps[z] = new_layer
 
         # Update layer_maps for the next cycle
-        layer_maps = after_cycle_maps.copy()
+        layer_maps = copy.deepcopy(after_cycle_maps)
         
-    for r in range(min(layer_maps.keys()), max(layer_maps.keys()) + 1):
-        for s in layer_maps[r]:
-            print(s)
-        print()
-    exit()
+    # for r in range(min(layer_maps.keys()), max(layer_maps.keys()) + 1):
+    #     for s in layer_maps[r]:
+    #         print(s)
+    #     print()
     
     return sum(row.count('#') for layer in layer_maps.values() for row in layer)
 
@@ -128,5 +127,5 @@ if __name__ == "__main__":
     # print(f"Part 1 Test: {part_one(test_input, False)} (expected {P1TEST})")
     # print(f"Part 2 Test: {part_two(test_input, False)} (expected {P2TEST})")
     print()
-    print(f"Part 1: {part_one(input)}")
+    print(f"Part 1: {part_one(input)}") # TODO:outputs 262, correct is 295 (test case is passing)
     # print(f"Part 2: {part_two(input)}")
