@@ -37,8 +37,7 @@ def get_antinodes_by_type(antenna_coords_single_type, MAX_ROW, MAX_CHR, part2):
             antinode = tuple(a + b for a, b in zip(compare_coord, delta))
             if 0 <= antinode[0] < MAX_ROW and 0 <= antinode[1] < MAX_CHR:
                 type_antinodes.add(antinode)
-            keep_going = part2
-            while(keep_going): # Keep adding in-bound antinodes
+            while(part2): # Keep adding in-bound antinodes
                 next_antinode = tuple(a + b for a, b in zip(antinode, delta))
                 if 0 <= next_antinode[0] < MAX_ROW and 0 <= next_antinode[1] < MAX_CHR:
                     type_antinodes.add(next_antinode)
