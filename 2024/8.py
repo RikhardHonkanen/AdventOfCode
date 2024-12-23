@@ -1,7 +1,7 @@
 ###################################
-####### SPOILERS FOR DAY 00 #######
+####### SPOILERS FOR DAY 08 #######
 ###################################
-### MESSAGE OF THE DAY IS: COW. ###
+## ANTIDON'T THIS MOTHERFLIPPER! ##
 ###################################
 
 import os, sys, copy
