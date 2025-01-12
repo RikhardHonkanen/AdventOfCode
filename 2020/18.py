@@ -1,12 +1,8 @@
 ###################################
 ####### SPOILERS FOR DAY 18 #######
 ###################################
-### MESSAGE OF THE DAY IS: COW. ###
-###################################
 
 import os, sys
-
-debug = False
 
 def parse_file(path):    
 	with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), path), "r") as f:

@@ -1,21 +1,13 @@
 ###################################
 ####### SPOILERS FOR DAY 14 #######
 ###################################
-### BIT BY BIT BY BIT BY BIT BY ###
-###################################
 
 import os, sys, re
-
-debug = False
 
 def parse_file(path):    
 	with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), path), "r") as f:
 		parsed_input = f.read().split('\n')
 	return parsed_input
-
-def print_debug(string):
-    if (debug):
-        print(string)
         
 def extract_values(s):
     match = re.search(r"mem\[(\d+)\] = (\d+)", s)
@@ -55,13 +47,9 @@ def get_padded_binary(num, length):
         _binary = bin(num).replace("0b", "")
         return ''.zfill(length - len(_binary)) + _binary
 
-def part_one(input, _debug = False):
-    if (_debug):
-        global debug
-        debug = True
-        
+def part_one(input):
     mask = ""
-    mem = {}                #{address: value}
+    mem = {}  #{address: value}
     for line in input:
         if "mask" in line:
             mask = line.split('=')[1].strip()
@@ -74,13 +62,9 @@ def part_one(input, _debug = False):
             
     return sum(int(x, 2) for x in mem.values())
 
-def part_two(input, _debug = False):
-    if (_debug):
-        global debug
-        debug = True
-        
+def part_two(input):
     mask = ""
-    mem = {}                #{address: value}
+    mem = {}  #{address: value}
     for line in input:
         if "mask" in line:
             mask = line.split('=')[1].strip()
@@ -100,8 +84,8 @@ def part_two(input, _debug = False):
 if __name__ == "__main__":
     P1TEST, P2TEST = 165, 208
     test_input, test_2_input, input = parse_file("14test.txt"), parse_file("14test2.txt"), parse_file("14.txt")
-    print(f"Part 1 Test: {part_one(test_input, False)} (expected {P1TEST})")
-    print(f"Part 2 Test: {part_two(test_2_input, False)} (expected {P2TEST})")
+    print(f"Part 1 Test: {part_one(test_input)} (expected {P1TEST})")
+    print(f"Part 2 Test: {part_two(test_2_input)} (expected {P2TEST})")
     print()
     print(f"Part 1: {part_one(input)}")
     print(f"Part 2: {part_two(input)}")

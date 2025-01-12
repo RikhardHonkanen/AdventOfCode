@@ -1,27 +1,19 @@
 ###################################
 ####### SPOILERS FOR DAY 16 #######
 ###################################
-######## CHOO HECKING CHOO ########
-###################################
 
 import os, sys, math
-
-debug = False
 
 def parse_file(path):    
 	with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), path), "r") as f:
 		parsed_input = f.read().split('\n')
 	return parsed_input
-
-def print_debug(string):
-    if (debug):
-        print(string)
         
 def value_not_in_ranges(rules, val):
         for ranges in rules.values():
             for r in ranges:
                 if(r[0] <= val <= r[1]):
-                    return False    # Return false if the value is in any stored range
+                    return False  # Return false if the value is in any stored range
         return True
     
 def setup_data(input):
@@ -116,8 +108,8 @@ def part_two(input, _debug = False):
 if __name__ == "__main__":
     P1TEST, P2TEST = 71, 0
     test_input, test2_input, input = parse_file("16test.txt"), parse_file("16test2.txt"), parse_file("16.txt")
-    # print(f"Part 1 Test: {part_one(test_input, False)} (expected {P1TEST})")
-    # print(f"Part 2 Test: {part_two(test2_input, False)} (expected {P2TEST})")
-    # print()
-    # print(f"Part 1: {part_one(input)}")
+    print(f"Part 1 Test: {part_one(test_input, False)} (expected {P1TEST})")
+    print(f"Part 2 Test: {part_two(test2_input, False)} (expected {P2TEST})")
+    print()
+    print(f"Part 1: {part_one(input)}")
     print(f"Part 2: {part_two(input)}")

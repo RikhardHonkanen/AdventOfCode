@@ -1,21 +1,13 @@
 ###################################
 ####### SPOILERS FOR DAY 02 #######
 ###################################
-#### IT'S STILL NOT CHRISTMAS. ####
-###################################
 
 import os, sys
-
-debug = False
 
 def parse_file(path):    
 	with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), path), "r") as f:
 		parsed_input = f.read().split('\n')
 	return parsed_input
-
-def print_debug(string):
-    if (debug):
-        print(string)
         
 def parse_single_line(line):
     parts = line.split(' ')
@@ -27,7 +19,6 @@ def parse_single_line(line):
     
     return lower_threshhold, upper_threshhold, character, password
     
-        
 def count_correct_passwords(input):
     count = 0
     for line in input:
@@ -49,27 +40,19 @@ def count_new_policy_passwords(input):
                 count += 1           
     return count 
 
-def part_one(input, _debug = False):
-    if (_debug):
-        global debug
-        debug = True   
-        
+def part_one(input):
     answer = count_correct_passwords(input)
     return answer
 
-def part_two(input, _debug = False):
-    if (_debug):
-        global debug
-        debug = True
-        
+def part_two(input):
     answer = count_new_policy_passwords(input)
     return answer
 
 if __name__ == "__main__":
     P1TEST, P2TEST = 2, 1
     test_input, input = parse_file("2test.txt"), parse_file("2.txt")
-    print(f"Part 1 Test: {part_one(test_input, False)} (expected {P1TEST})")
-    print(f"Part 2 Test: {part_two(test_input, False)} (expected {P2TEST})")
+    print(f"Part 1 Test: {part_one(test_input)} (expected {P1TEST})")
+    print(f"Part 2 Test: {part_two(test_input)} (expected {P2TEST})")
     print()
     print(f"Part 1: {part_one(input)}")
     print(f"Part 2: {part_two(input)}")

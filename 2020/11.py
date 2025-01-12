@@ -1,8 +1,6 @@
 ###################################
 ####### SPOILERS FOR DAY 11 #######
 ###################################
-###### I'LL NEVER TALK, PIG. ######
-###################################
 
 import os, sys
 
@@ -60,14 +58,14 @@ def can_take_seat_strict(r_idx, s_idx, seat_map):
 def place_too_crowded(r_idx, s_idx, seat_map):
     start_row, end_row, start_seat, end_seat = get_boundaries(r_idx, s_idx, seat_map)
     
-    stinky_people = 0
+    other_people = 0
     for i in range(start_row, end_row + 1):
         for j in range(start_seat, end_seat + 1):                
             if seat_map[i][j] == '#':
-                stinky_people += 1
+                other_people += 1
                 
                 
-    if stinky_people >= 5:       
+    if other_people >= 5:       
         return True
     
     return False
@@ -84,33 +82,28 @@ def place_too_crowded_strict(r_idx, s_idx, seat_map):
         else:
             return seat_map[new_i][new_j]
     
-    stinky_people = 0
+    other_people = 0
     for i in range(start_row, end_row + 1):
         for j in range(start_seat, end_seat + 1):  
             if seat_map[i][j] == '#':
-                stinky_people += 1
+                other_people += 1
             elif seat_map[i][j] == '.':
                 direction = (i - r_idx, j - s_idx)
                 if direction != (0, 0):
                     next_seat = get_next_seat(i, j, direction)
                     if next_seat == '#':
-                        stinky_people += 1
+                        other_people += 1
                         
-    if stinky_people >= 6:       
+    if other_people >= 6:       
         return True
     
     return False
 
-def part_one(input, _debug = False):
-    if (_debug):
-        global debug
-        debug = True
-        
+def part_one(input):
     # Adjacent = 8 positions: up, down, left, right, or diagonal from the seat.
     # If a seat is empty (L) and there are no occupied seats adjacent to it, the seat becomes occupied.
     # If a seat is occupied (#) and four or more seats adjacent to it are also occupied, the seat becomes empty.
     # Otherwise, the seat's state does not change.
-    
     seat_map = input
     updated_map = seat_map.copy()
     loop_count = 0
@@ -134,13 +127,8 @@ def part_one(input, _debug = False):
             
     return sum(s.count('#') for s in updated_map)
 
-def part_two(input, _debug = False):
-    if (_debug):
-        global debug
-        debug = True
-        
+def part_two(input):
     # Same as part 1, but if adjacent seat == '.', keep looking in that direction until empty/occupied seat or map ends.
-        
     seat_map = input
     updated_map = seat_map.copy()
     loop_count = 0
@@ -167,8 +155,8 @@ def part_two(input, _debug = False):
 if __name__ == "__main__":
     P1TEST, P2TEST = 37, 26
     test_input, input = parse_file("11test.txt"), parse_file("11.txt")
-    print(f"Part 1 Test: {part_one(test_input, False)} (expected {P1TEST})")
-    print(f"Part 2 Test: {part_two(test_input, False)} (expected {P2TEST})")
+    print(f"Part 1 Test: {part_one(test_input)} (expected {P1TEST})")
+    print(f"Part 2 Test: {part_two(test_input)} (expected {P2TEST})")
     print()
     print(f"Part 1: {part_one(input)}")
     print(f"Part 2: {part_two(input)}")

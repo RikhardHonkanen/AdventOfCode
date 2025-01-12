@@ -1,21 +1,13 @@
 ###################################
 ####### SPOILERS FOR DAY 09 #######
 ###################################
-##### PLEASE INSERT FUNNYBONE #####
-###################################
 
 import os, sys
-
-debug = False
 
 def parse_file(path):    
 	with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), path), "r") as f:
 		parsed_input = f.read().split('\n')
 	return parsed_input
-
-def print_debug(string):
-    if (debug):
-        print(string)
         
 def check_index(input, considered_idx, preamble_length):
     for i in range(considered_idx - preamble_length, considered_idx - 1):
@@ -24,10 +16,7 @@ def check_index(input, considered_idx, preamble_length):
                     return True
     return False
 
-def part_one(input, preamble_length, _debug = False):
-    if (_debug):
-        global debug
-        debug = True
+def part_one(input, preamble_length):
     considered_idx = preamble_length
     while (True):        
         if not check_index(input, considered_idx, preamble_length):
@@ -35,11 +24,7 @@ def part_one(input, preamble_length, _debug = False):
         else:
             considered_idx += 1
 
-def part_two(input, preamble_length, _debug = False):
-    if (_debug):
-        global debug
-        debug = True
-    
+def part_two(input, preamble_length):
     invalid_number, invalid_idx = part_one(input, preamble_length)
     invalid_number = int(invalid_number)
     
@@ -66,8 +51,8 @@ def part_two(input, preamble_length, _debug = False):
 if __name__ == "__main__":
     P1TEST, P2TEST = 127, 62
     test_input, input = parse_file("9test.txt"), parse_file("9.txt")
-    print(f"Part 1 Test: {part_one(test_input, 5, False)[0]} (expected {P1TEST})")
-    print(f"Part 2 Test: {part_two(test_input, 5, False)} (expected {P2TEST})")
+    print(f"Part 1 Test: {part_one(test_input, 5)[0]} (expected {P1TEST})")
+    print(f"Part 2 Test: {part_two(test_input, 5)} (expected {P2TEST})")
     print()
     print(f"Part 1: {part_one(input, 25)[0]}")
     print(f"Part 2: {part_two(input, 25)}")

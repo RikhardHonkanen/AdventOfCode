@@ -1,29 +1,19 @@
 ###################################
 ####### SPOILERS FOR DAY 07 #######
 ###################################
-##### https://www.youtube.com #####
-###### /watch?v=ub82Xb1C8os #######
-###################################
 
 import os, sys, re
-
-debug = True
 
 def parse_file(path):    
 	with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), path), "r") as f:
 		parsed_input = f.read().split('\n')
 	return parsed_input
-
-def print_debug(string):
-    if (debug):
-        print(string)
         
 def extract_rules(input):
     rules = {}
     colors = set()
     for s in input:
         split = s.find("contain")
-        # Using list comprehension and slicing
         # https://pythonguides.com/split-a-string-by-index-in-python/
         indices = [split - 1, split + 8]
         substrings = [s[start:end] for start, end in zip([0] + indices, indices + [None])]
@@ -48,18 +38,11 @@ def extract_rules(input):
                 
     return rules, colors
 
-def part_one(input, _debug=False):
-    if _debug:
-        global debug
-        debug = True
-        
+def part_one(input):
     rules, colors = extract_rules(input)
-    
     target = "shiny gold"
+    valid_bags = set()  # Set to track bags that can contain the target
     
-    # Set to track bags that can contain the target
-    valid_bags = set()
-
     def explore_paths(colors, target):
         found_any = False
         
@@ -87,11 +70,7 @@ def part_one(input, _debug=False):
     
     return len(valid_bags)
 
-def part_two(input, _debug=False):
-    if _debug:
-        global debug
-        debug = True
-        
+def part_two(input):
     rules, colors = extract_rules(input)
     outer_container = "shiny gold"
     
@@ -112,8 +91,8 @@ def part_two(input, _debug=False):
 if __name__ == "__main__":
     P1TEST, P2TEST = 4, 126
     test_input, test_2_input, input = parse_file("7test.txt"), parse_file("7test2.txt"), parse_file("7.txt")
-    print(f"Part 1 Test: {part_one(test_input, False)} (expected {P1TEST})")
-    print(f"Part 2 Test: {part_two(test_2_input, False)} (expected {P2TEST})")
+    print(f"Part 1 Test: {part_one(test_input)} (expected {P1TEST})")
+    print(f"Part 2 Test: {part_two(test_2_input)} (expected {P2TEST})")
     print()
     print(f"Part 1: {part_one(input)}")
     print(f"Part 2: {part_two(input)}")

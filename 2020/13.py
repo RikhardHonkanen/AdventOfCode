@@ -1,27 +1,15 @@
 ###################################
 ####### SPOILERS FOR DAY 13 #######
 ###################################
-#### ANOTHER ONE RIDES THE BUS ####
-###################################
 
 import os, sys
-
-debug = False
 
 def parse_file(path):    
 	with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), path), "r") as f:
 		parsed_input = f.read().split('\n')
 	return parsed_input
 
-def print_debug(string):
-    if (debug):
-        print(string)
-
-def part_one(input, _debug = False):
-    if (_debug):
-        global debug
-        debug = True
-        
+def part_one(input):
     t_zero = int(input[0])
     departures = input[1].split(',')
     departures = {d for d in departures}
@@ -41,11 +29,7 @@ def part_one(input, _debug = False):
         
     return best_dep * (time - t_zero)
 
-def part_two(input, _debug=False):
-    if _debug:
-        global debug
-        debug = True
-
+def part_two(input):
     # Split and parse bus IDs
     departures = input[1].split(',')
     bus_ids = [(int(bus), offset) for offset, bus in enumerate(departures) if bus != 'x']
@@ -60,10 +44,6 @@ def part_two(input, _debug=False):
         # Increment timestamp by the current step until we satisfy the condition for the current bus ID
         while (timestamp + offset) % bus_id != 0:
             timestamp += step
-            
-        ### DEBUG
-        print(f"Timestamp: {timestamp}, bus ID: {bus_id}, Step: {step}")
-        ### END DEBUG
         
         '''
         Each time we alter the "step" variable we will currently be aligned at a timestamp that works for all ID's we have checked so far, 
@@ -77,10 +57,10 @@ def part_two(input, _debug=False):
 if __name__ == "__main__":
     P1TEST, P2TEST = 295, 1068781
     test_input, input = parse_file("13test.txt"), parse_file("13.txt")
-    # print(f"Part 1 Test: {part_one(test_input, False)} (expected {P1TEST})")
-    print(f"Part 2 Test: {part_two(test_input, False)} (expected {P2TEST})")
+    print(f"Part 1 Test: {part_one(test_input)} (expected {P1TEST})")
+    print(f"Part 2 Test: {part_two(test_input)} (expected {P2TEST})")
     print()
-    # print(f"Part 1: {part_one(input)}")
+    print(f"Part 1: {part_one(input)}")
     print(f"Part 2: {part_two(input)}")
     
 # Part 2 by ChatGPT

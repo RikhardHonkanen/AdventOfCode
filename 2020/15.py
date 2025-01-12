@@ -1,27 +1,15 @@
 ###################################
 ####### SPOILERS FOR DAY 15 #######
 ###################################
-##### MOBY HAD A LITTLE DUCK. #####
-###################################
 
 import os, sys
-
-debug = False
 
 def parse_file(path):    
 	with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), path), "r") as f:
 		parsed_input = f.read().split('\n')
 	return parsed_input
 
-def print_debug(string):
-    if (debug):
-        print(string)
-
-def solve(input, final_turn=2020, _debug=False):
-    if (_debug):
-        global debug
-        debug = True
-        
+def solve(input, final_turn=2020):
     # Map starting numbers to dict - {number: turn_last_spoken}   
     numbers_with_turns = {int(char): idx + 1 for idx, char in enumerate(input[0].split(','))}
     last_num_spoken = input[0].split(',')[-1]       # Init at last starting number in input
@@ -49,7 +37,7 @@ if __name__ == "__main__":
     P1TEST, P2TEST = 436, 0
     test_input, input = parse_file("15test.txt"), parse_file("15.txt")
     print(f"Part 1 Test: {solve(test_input)} (expected {P1TEST})")
-    print(f"Part 2 Test: {solve(test_input, 30000000, False)} (expected {P2TEST})")
+    print(f"Part 2 Test: {solve(test_input, 30000000)} (expected {P2TEST})")
     print()
     print(f"Part 1: {solve(input)}")
     print(f"Part 2: {solve(input, 30000000)}")

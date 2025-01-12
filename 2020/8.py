@@ -1,8 +1,6 @@
 ###################################
 ####### SPOILERS FOR DAY 08 #######
 ###################################
-############# GANDALF #############
-###################################
 
 import os, sys
 
@@ -14,16 +12,10 @@ import os, sys
 # jmp - jump x lines
 # nop - no operation, skip to next instruction
 
-debug = False
-
 def parse_file(path):    
 	with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), path), "r") as f:
 		parsed_input = f.read().split('\n')
 	return parsed_input
-
-def print_debug(string):
-    if (debug):
-        print(string)
         
 def run_program(instructions):
     """ Helper function to run the program and detect termination or loop """
@@ -51,11 +43,7 @@ def run_program(instructions):
     # If we finish the loop, the program terminated correctly
     return True, accumulator
 
-def part_one(input, _debug = False):            
-    if (_debug):
-        global debug
-        debug = True
-        
+def part_one(input):            
     accumulator = 0
     line_idx = 0
     visited_lines = set()
@@ -79,11 +67,7 @@ def part_one(input, _debug = False):
     return accumulator
 
 
-def part_two(input, _debug = False):
-    if _debug:
-        global debug
-        debug = True
-    
+def part_two(input):
     # Try modifying each "jmp" or "nop" instruction
     for i in range(len(input)):
         # Copy the original instructions
@@ -109,8 +93,8 @@ def part_two(input, _debug = False):
 if __name__ == "__main__":
     P1TEST, P2TEST = 5, 8
     test_input, input = parse_file("8test.txt"), parse_file("8.txt")
-    print(f"Part 1 Test: {part_one(test_input, False)} (expected {P1TEST})")
-    print(f"Part 2 Test: {part_two(test_input, False)} (expected {P2TEST})")
+    print(f"Part 1 Test: {part_one(test_input)} (expected {P1TEST})")
+    print(f"Part 2 Test: {part_two(test_input)} (expected {P2TEST})")
     print()
     print(f"Part 1: {part_one(input)}")
     print(f"Part 2: {part_two(input)}")

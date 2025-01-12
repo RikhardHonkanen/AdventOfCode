@@ -1,23 +1,14 @@
 # ###################################
 # ####### SPOILERS FOR DAY 17 #######
 # ###################################
-# ########  TAKE YOUR BRAIN  ########
-# ###### TO ANOTHER DIMENSION. ######
-# ###################################
 
 # import os, sys, copy
-
-# debug = False
 
 # def parse_file(path):    
 # 	with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), path), "r") as f:
 # 		parsed_input = f.read().split('\n')
 # 	return parsed_input
 
-# def print_debug(string):
-#     if (debug):
-#         print(string)
-        
 # def expand_layers(layer_maps, min_z, max_z, inactive='.'):
 #     # Get the dimensions of the grid from one of the layers (assuming all layers are same size)
 #     x_size = len(layer_maps[0][0])  # Number of columns in each row
@@ -68,11 +59,7 @@
     
 #     return neighbours
 
-# def part_one(input, _debug = False):
-#     if (_debug):
-#         global debug
-#         debug = True
-        
+# def part_one(input):
 #     boot_cycles = 6
 #     layer_maps = {0: input}
 #     after_cycle_maps = {}
@@ -113,11 +100,7 @@
     
 #     return sum(row.count('#') for layer in layer_maps.values() for row in layer)
 
-# def part_two(input, _debug = False):
-#     if (_debug):
-#         global debug
-#         debug = True
-        
+# def part_two(input):
 #     answer = 'Part two'            
 #     return answer
 
