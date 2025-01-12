@@ -1,8 +1,6 @@
 ###################################
 ####### SPOILERS FOR DAY 01 #######
 ###################################
-## IT'S FREAKING DECEMBER AGAIN. ##
-###################################
 
 import os, sys
 from bisect import bisect_left, bisect_right

@@ -1,8 +1,6 @@
 ###################################
 ####### SPOILERS FOR DAY 09 #######
 ###################################
-##/.\./.\./.\./.\./.\./.\./.\./.\##
-###################################
 
 import os, sys
 
@@ -30,6 +28,32 @@ def add_block_to_output(block):
     for id in block:
         output.append(int(id))
     return output
+
+def scan_for_block_to_move(mem, working_idx, block_id):
+        if(mem[working_idx][0] == block_id):  # Correct block
+            return working_idx
+        else:
+            working_idx -= 1
+            return scan_for_block_to_move(mem, working_idx, block_id)
+        
+def scan_for_open_mem_block(mem, block_size, idx):
+    while idx < len(mem):
+        if mem[idx][0] == '.':
+            if len(mem[idx]) >= block_size:
+                return idx
+        idx += 1
+    return -1  # No large enough available memory region
+
+def move_block_to_free_memory(mem, block_index, free_index):
+    block = mem.pop(block_index)
+    mem.insert(block_index, ['.'] * len(block))
+    
+    if (len(mem[free_index][len(block):]) > 0):    
+        mem[free_index] = mem[free_index][len(block):]
+    else:
+        mem.pop(free_index)
+    mem.insert(free_index, block)
+    return mem
 
 def part_one(input):
     _, mem = expand_input(input)
@@ -66,32 +90,6 @@ def part_one(input):
     checksum = sum(idx * n for idx, n in enumerate(flattened_output))
         
     return checksum
-
-def scan_for_block_to_move(mem, working_idx, block_id):
-        if(mem[working_idx][0] == block_id):  # Correct block
-            return working_idx
-        else:
-            working_idx -= 1
-            return scan_for_block_to_move(mem, working_idx, block_id)
-        
-def scan_for_open_mem_block(mem, block_size, idx):
-    while idx < len(mem):
-        if mem[idx][0] == '.':
-            if len(mem[idx]) >= block_size:
-                return idx
-        idx += 1
-    return -1  # No large enough available memory region
-
-def move_block_to_free_memory(mem, block_index, free_index):
-    block = mem.pop(block_index)
-    mem.insert(block_index, ['.'] * len(block))
-    
-    if (len(mem[free_index][len(block):]) > 0):    
-        mem[free_index] = mem[free_index][len(block):]
-    else:
-        mem.pop(free_index)
-    mem.insert(free_index, block)
-    return mem
 
 def part_two(input):
     block_count, mem = expand_input(input)

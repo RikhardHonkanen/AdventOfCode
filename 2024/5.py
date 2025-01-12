@@ -1,8 +1,6 @@
 ###################################
 ####### SPOILERS FOR DAY 05 #######
 ###################################
-############# *CRIES* #############
-###################################
 
 import os, sys
 from collections import defaultdict, deque, Counter

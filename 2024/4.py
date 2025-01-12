@@ -1,8 +1,6 @@
 ###################################
 ####### SPOILERS FOR DAY 04 #######
 ###################################
-### OH XMAS TROY, OH XMAS TROY  ###
-###################################
 
 import os, sys
 
@@ -51,18 +49,14 @@ def find_X_MASes(letter_map, ridx, cidx):
     targets = ['M', 'S']
     valid = True
     # Top left to bottom right diagonal
-    if (letter_map[ridx - 1][cidx - 1] not in targets):
-        valid = False
-    elif (letter_map[ridx + 1][cidx + 1] not in targets):
-        valid = False
-    elif (letter_map[ridx - 1][cidx - 1] == letter_map[ridx + 1][cidx + 1]): # no SAS or MAM allowed
+    if (letter_map[ridx - 1][cidx - 1] not in targets
+        or letter_map[ridx + 1][cidx + 1] not in targets
+        or letter_map[ridx - 1][cidx - 1] == letter_map[ridx + 1][cidx + 1]):
         valid = False
     # Bottom left to top right diagonal
-    if (letter_map[ridx + 1][cidx - 1] not in targets):
-        valid = False
-    elif (letter_map[ridx - 1][cidx + 1] not in targets):
-        valid = False
-    elif (letter_map[ridx + 1][cidx - 1] == letter_map[ridx - 1][cidx + 1]): # no SAS or MAM allowed
+    if (letter_map[ridx + 1][cidx - 1] not in targets
+        or letter_map[ridx - 1][cidx + 1] not in targets
+        or letter_map[ridx + 1][cidx - 1] == letter_map[ridx - 1][cidx + 1]):
         valid = False
         
     return 1 if valid else 0
