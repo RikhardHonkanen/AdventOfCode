@@ -1,8 +1,6 @@
 ###################################
 ####### SPOILERS FOR DAY 00 #######
 ###################################
-### MESSAGE OF THE DAY IS: COW. ###
-###################################
 
 import os, sys
 
@@ -23,7 +21,7 @@ if __name__ == "__main__":
     P1TEST, P2TEST = 0, 0
     test_input, input = parse_file("0test.txt"), parse_file("0.txt")
     print(f"Part 1 Test: {part_one(test_input)} (expected {P1TEST})")
-    # print(f"Part 2 Test: {part_two(test_input)} (expected {P2TEST})")
-    # print()
-    # print(f"Part 1: {part_one(input)}")
-    # print(f"Part 2: {part_two(input)}")
+    print(f"Part 2 Test: {part_two(test_input)} (expected {P2TEST})")
+    print()
+    print(f"Part 1: {part_one(input)}")
+    print(f"Part 2: {part_two(input)}")
