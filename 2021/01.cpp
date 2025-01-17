@@ -26,27 +26,21 @@ std::vector<int> parse_file(const std::string &path)
     return numbers;
 }
 
-int count_increases(const std::vector<int> &depths)
+int count_increases(const std::vector<int> &depths, bool threes = false)
 {
     int count = 0;
     for (size_t i = 1; i < depths.size(); ++i)
     {
-        if (depths[i] > depths[i - 1])
+        if (threes)
         {
-            ++count;
+            int sweep_a = depths[i] + depths[i + 1] + depths[i + 2];
+            int sweep_b = depths[i + 1] + depths[i + 2] + depths[i + 3];
+            if (sweep_b > sweep_a)
+            {
+                ++count;
+            }
         }
-    }
-    return count;
-}
-
-int count_increases_by_threes(const std::vector<int> &depths)
-{
-    int count = 0;
-    for (size_t i = 0; i < depths.size() - 2; ++i)
-    {
-        int sweep_a = depths[i] + depths[i + 1] + depths[i + 2];
-        int sweep_b = depths[i + 1] + depths[i + 2] + depths[i + 3];
-        if (sweep_b > sweep_a)
+        if (depths[i] > depths[i - 1] && !threes)
         {
             ++count;
         }
@@ -61,7 +55,7 @@ std::string part_one(std::vector<int> &input)
 
 std::string part_two(std::vector<int> &input)
 {
-    return std::to_string(count_increases_by_threes(input));
+    return std::to_string(count_increases(input, true));
 }
 
 int main()
