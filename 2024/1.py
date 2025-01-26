@@ -5,27 +5,17 @@
 import os, sys
 from bisect import bisect_left, bisect_right
 
-debug = False
-
 def parse_file(path):    
 	with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), path), "r") as f:
 		parsed_input = f.read().split('\n')
 	return parsed_input
-
-def print_debug(string):
-    if (debug):
-        print(string)
         
 def count_occurrences(sorted_list, number):
     left = bisect_left(sorted_list, number)
     right = bisect_right(sorted_list, number)
     return right - left
 
-def part_one(input, _debug = False):
-    if (_debug):
-        global debug
-        debug = True
-        
+def part_one(input):
     list1, list2 = zip(*[map(int, s.split()) for s in input])
     sorted_list1 = sorted(list1)
     sorted_list2 = sorted(list2)
@@ -36,11 +26,7 @@ def part_one(input, _debug = False):
 
     return answer
 
-def part_two(input, _debug = False):
-    if (_debug):
-        global debug
-        debug = True
-        
+def part_two(input):
     list1, list2 = zip(*[map(int, s.split()) for s in input])
     sorted_list2 = sorted(list2)
     
@@ -53,8 +39,8 @@ def part_two(input, _debug = False):
 if __name__ == "__main__":
     P1TEST, P2TEST = 11, 31
     test_input, input = parse_file("1test.txt"), parse_file("1.txt")
-    print(f"Part 1 Test: {part_one(test_input, False)} (expected {P1TEST})")
-    print(f"Part 2 Test: {part_two(test_input, False)} (expected {P2TEST})")
+    print(f"Part 1 Test: {part_one(test_input)} (expected {P1TEST})")
+    print(f"Part 2 Test: {part_two(test_input)} (expected {P2TEST})")
     print()
     print(f"Part 1: {part_one(input)}")
     print(f"Part 2: {part_two(input)}")

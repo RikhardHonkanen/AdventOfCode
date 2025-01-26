@@ -26,15 +26,70 @@ std::vector<int> parse_file(const std::string &path)
     return numbers;
 }
 
+// int count_increases(const std::vector<int> &depths, bool threes = false)
+// {
+//     int count = 0;
+//     for (size_t i = 1; i < depths.size(); ++i)
+//     {
+//         if (threes)
+//         {
+//             int sweep_a = depths[i] + depths[i + 1] + depths[i + 2];
+//             int sweep_b = depths[i + 1] + depths[i + 2] + depths[i + 3];
+//             if (sweep_b > sweep_a)
+//             {
+//                 ++count;
+//             }
+//         }
+//         if (depths[i] > depths[i - 1] && !threes)
+//         {
+//             ++count;
+//         }
+//     }
+//     return count;
+// }
+// int count_increases(const std::vector<int> &depths, bool threes = false)
+// {
+//     int count = 0;
+//     for (size_t i = 1; i < depths.size(); ++i)
+//     {
+//         if (threes)
+//         {
+// int sweep_a = depths[i] + depths[i + 1] + depths[i + 2];
+// int sweep_b = sweep_a - depths[i] + depths[i + 3];
+// if (sweep_b > sweep_a)
+// {
+//     ++count;
+// }
+//             int sweep_a = depths[i] + depths[i + 1] + depths[i + 2];
+//             int sweep_b = depths[i + 1] + depths[i + 2] + depths[i + 3];
+//             if (sweep_b > sweep_a)
+//             {
+//                 ++count;
+//             }
+//         }
+//         if (depths[i] > depths[i - 1] && !threes)
+//         {
+//             ++count;
+//         }
+//     }
+//     return count;
+// }
+
 int count_increases(const std::vector<int> &depths, bool threes = false)
 {
     int count = 0;
     for (size_t i = 1; i < depths.size(); ++i)
     {
+
         if (threes)
         {
-            int sweep_a = depths[i] + depths[i + 1] + depths[i + 2];
-            int sweep_b = depths[i + 1] + depths[i + 2] + depths[i + 3];
+            auto sum_window = [](const std::vector<int> &v, int start)
+            {
+                return v[start] + v[start + 1] + v[start + 2];
+            };
+
+            int sweep_a = sum_window(depths, i);
+            int sweep_b = sum_window(depths, i + 1);
             if (sweep_b > sweep_a)
             {
                 ++count;
