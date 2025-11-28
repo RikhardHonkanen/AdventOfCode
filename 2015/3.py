@@ -34,28 +34,25 @@ def part_two(data):
     visited = set()
     current = (0, 0)
     r_current = (0, 0)
-    visited.add(current)  
-    for idx, c in enumerate(data):  # N:^ E:> S:v W:<
-        if idx % 2 == 0:        
-            if c == '^':
-                current = modify_tuple(current, 0, -1)
-            if c == '>':
-                current = modify_tuple(current, 1, 1)
-            if c == 'v':
-                current = modify_tuple(current, 0, 1)
-            if c == '<':
-                current = modify_tuple(current, 1, -1)
+    visited.add(current)
+
+    moves = {
+        '^': (0, -1),
+        'v': (0,  1),
+        '>': (1,  0),
+        '<': (-1, 0),
+    }
+
+    for idx, c in enumerate(data):
+        dx, dy = moves[c]
+
+        if idx % 2 == 0:
+            current = (current[0] + dx, current[1] + dy)
             visited.add(current)
         else:
-            if c == '^':
-                r_current = modify_tuple(r_current, 0, -1)
-            if c == '>':
-                r_current = modify_tuple(r_current, 1, 1)
-            if c == 'v':
-                r_current = modify_tuple(r_current, 0, 1)
-            if c == '<':
-                r_current = modify_tuple(r_current, 1, -1)        
+            r_current = (r_current[0] + dx, r_current[1] + dy)
             visited.add(r_current)
+
     return len(visited)
 
 if __name__ == "__main__":
