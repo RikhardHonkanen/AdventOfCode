@@ -39,10 +39,6 @@ def part_two(data):
         # Count how many multiples of 100 are strictly between start and extended_end.
         low = min(start, extended_end)
         high = max(start, extended_end)
-
-        # Number of multiples strictly between low and high:
-        # multipliers k such that low < k*100 < high
-        # equals ( (high-1)//100 ) - ( low//100 )
         passes += max(0, ( (high - 1) // 100 ) - (low // 100))
 
         dial = extended_end % 100
@@ -55,8 +51,8 @@ def part_two(data):
 if __name__ == "__main__":
     P1TEST, P2TEST = 3, 6
     test_data, data = parse_file("1test.txt"), parse_file("1.txt")
-    # print(f"Part 1 Test: {part_one(test_data)} (expected {P1TEST})")
+    print(f"Part 1 Test: {part_one(test_data)} (expected {P1TEST})")
     print(f"Part 2 Test: {part_two(test_data)} (expected {P2TEST})")
-    # print()
-    # print(f"Part 1: {part_one(data)}")
+    print()
+    print(f"Part 1: {part_one(data)}")
     print(f"Part 2: {part_two(data)}")
