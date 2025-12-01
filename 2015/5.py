@@ -34,15 +34,21 @@ def part_one(data: list[str]) -> int:
             
     return nice
 
-def part_two(data):
-    answer = 'Part two'            
-    return answer
+# qjhvhtzxzqqjkmpb is nice because is has a pair that appears twice (qj) and a letter that repeats with exactly one letter between them (zxz).
+# xxyxx is nice because it has a pair that appears twice and a letter that repeats with one between, even though the letters used by each rule overlap.
+# uurcxstgmygtbstg is naughty because it has a pair (tg) but no repeat with a single letter between them.
+# ieodomkazucvgmuy is naughty because it has a repeating letter with one between (odo), but no pair that appears twice.
+def part_two(data: list[str]) -> int:
+    nice: int = 0
+    for line in data:
+        print(line)
+    return "answer"
 
 if __name__ == "__main__":
-    P1TEST, P2TEST = 2, 0
-    test_data, data = parse_file("5test.txt"), parse_file("5.txt")
-    print(f"Part 1 Test: {part_one(test_data)} (expected {P1TEST})")
-    # print(f"Part 2 Test: {part_two(test_data)} (expected {P2TEST})")
+    P1TEST, P2TEST = 2, 2
+    test_data, test_2_data, data = parse_file("5test.txt"), parse_file("5test2.txt"), parse_file("5.txt")
+    # print(f"Part 1 Test: {part_one(test_data)} (expected {P1TEST})")
+    print(f"Part 2 Test: {part_two(test_2_data)} (expected {P2TEST})")
     print()
-    print(f"Part 1: {part_one(data)}")
+    # print(f"Part 1: {part_one(data)}")
     # print(f"Part 2: {part_two(data)}")
